@@ -1,0 +1,4 @@
+.idea/
+env/
+credentials.yaml
+db.sqlite3
