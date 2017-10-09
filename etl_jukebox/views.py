@@ -33,10 +33,9 @@ def search(request):
         jm = JukeboxManagerHandler.get_jukebox_manager()
         search_results = jm.search(q)
         data = json.dumps(search_results['song_hits'])
-    else:
-        data = 'fail'
-    mimetype = 'application/json'
-    return HttpResponse(data, mimetype)
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
+    return HttpResponseNotFound('Page not found.')
 
 
 @csrf_exempt
@@ -46,13 +45,33 @@ def add(request):
         q = json.loads(q)
         jm = JukeboxManagerHandler.get_jukebox_manager()
         jm.add_song(**q)
-        return HttpResponse("OK")
-    return HttpResponseNotFound("Page not found.")
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')
 
 
 def play(request):
     if request.is_ajax():
         jm = JukeboxManagerHandler.get_jukebox_manager()
         jm.start_jukebox()
-        return HttpResponse("OK")
-    return HttpResponseNotFound("Page not found.")
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')
+
+
+def current_details(request):
+    if request.is_ajax():
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        details = jm.get_current_song_details()
+        data = json.dumps(details)
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
+    return HttpResponseNotFound('Page not found.')
+
+
+def playlist_details(request):
+    if request.is_ajax():
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        details = jm.get_playlist_details()
+        data = json.dumps(details)
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
+    return HttpResponseNotFound('Page not found.')

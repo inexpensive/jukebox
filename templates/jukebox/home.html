@@ -5,14 +5,26 @@
     <title>VDE Jukebox</title>
 </head>
 <body>
-<form id="search_form" name="search_form" type="get"  style="margin: 0">
-    <input id="search_box" type="text" name="search_box" placeholder="Search for a song, artist, or album.">
-    <button id="search_submit" type="submit">Search</button>
-</form>
-<button id="play_button">Play</button>
-<br>
-<table id="search_results" class="table table-striped table-hover" style="width: 50%">
-    <tbody></tbody>
-</table>
+    <div id="header">
+        <form id="search_form" name="search_form" type="get"  style="margin: 0">
+            <input id="search_box" type="text" name="search_box" placeholder="Search for a song, artist, or album.">
+            <button id="search_submit" type="submit">Search</button>
+        </form>
+        <button id="play_button">Start Jukebox</button>
+    </div>
+    <div id="search-results-field">
+        <table id="search_results" class="table table-striped table-hover">
+            <tbody></tbody>
+        </table>
+    </div>
+    <div id="playlist-field" style="position: absolute; right: 10px; bottom: 100px; width: 35%; height: 40%; overflow: auto; display: none;">
+        <table id="playlist" class="table table-inverse">
+            <tbody></tbody>
+        </table>
+    </div>
+    <div id="footer">
+        This is where the currently playing stuff will live!
+        <button id="playlist_button" style="float: right;">Show Playlist</button>
+    </div>
 </body>
 {% endblock %}

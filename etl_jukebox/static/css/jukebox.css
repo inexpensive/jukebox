@@ -3,3 +3,25 @@ img.album-art {
     width: auto;
     vertical-align: text-bottom;
 }
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+}
+
+#search-results-field {
+    position: fixed;
+    top: 50px;
+    bottom: 100px;
+    overflow: auto;
+    width: 100%;
+}
+
+#header {
+    position: relative;
+    top: 0;
+    height: 50px;
+    width: 100%;
+}

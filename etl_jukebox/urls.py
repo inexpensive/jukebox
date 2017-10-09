@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^play/.*$', views.play),
     url(r'^admin/', admin.site.urls),
     url(r'^add/.*', views.add),
+    url(r'^current/.*$', views.current_details),
+    url(r'^playlist/.*$', views.playlist_details),
 ]
