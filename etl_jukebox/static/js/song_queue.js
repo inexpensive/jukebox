@@ -4,7 +4,7 @@ $(function () {
         $.ajax({
             type: 'GET',
             data: extract_song_id(this.href),
-            url: '/play/'
+            url: '/add/'
         })
     })
 });

@@ -5,9 +5,14 @@
     <title>VDE Jukebox</title>
 </head>
 <body>
-<form id="search_form" name="search_form" type="get" action="/search/" style="margin: 0">
+<form id="search_form" name="search_form" type="get"  style="margin: 0">
     <input id="search_box" type="text" name="search_box" placeholder="Search for a song, artist, or album.">
     <button id="search_submit" type="submit">Search</button>
 </form>
+<button id="play_button">Play</button>
+<br>
+<table id="search_results" class="table table-striped table-hover" style="width: 50%">
+    <tbody></tbody>
+</table>
 </body>
 {% endblock %}

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^search/.*$', views.search),
     url(r'^play/.*$', views.play),
     url(r'^admin/', admin.site.urls),
+    url(r'^add/.*', views.add),
 ]

@@ -9,7 +9,7 @@
 <body>
 {% for song in song_hits %}
     <p>
-        <a class="song-list" href="/play/?song={{ song.track.storeId }}">
+        <a class="song-list" href="/add/?song={{ song.track.storeId }}">
             <img src="{{ song.track.albumArtRef.0.url }}" class="album-art">
             <b>{{ song.track.artist }}</b> - {{ song.track.title }}
         </a>
