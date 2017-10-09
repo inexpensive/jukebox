@@ -1,0 +1,13 @@
+{% extends "jukebox/base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>VDE Jukebox</title>
+</head>
+<body>
+<form id="search_form" name="search_form" type="get" action="/search/" style="margin: 0">
+    <input id="search_box" type="text" name="search_box" placeholder="Search for a song, artist, or album.">
+    <button id="search_submit" type="submit">Search</button>
+</form>
+</body>
+{% endblock %}
