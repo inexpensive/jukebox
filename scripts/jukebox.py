@@ -22,14 +22,24 @@ class Jukebox:
         self.__is_authenticated()
         return self.api.search(query)
 
-    def set_track(self, track_id):
+    def get_track_url(self, track_id):
         self.__is_authenticated()
-        track_url = self.api.get_stream_url(track_id)
-        self.player.set_media(vlc.get_default_instance().media_new(track_url))
+        return self.api.get_stream_url(track_id)
+
+    def set_track(self, filepath):
+        self.player.set_media(vlc.get_default_instance().media_new('songs/' + filepath + '.mp3'))
 
     def play(self):
         self.__is_authenticated()
         self.player.play()
+
+    def pause(self):
+        self.__is_authenticated()
+        self.player.pause()
+
+    def stop(self):
+        self.__is_authenticated()
+        self.player.stop()
 
     def get_length(self):
         self.__is_authenticated()
@@ -46,4 +56,3 @@ class Jukebox:
     def __is_authenticated(self):
         if not self.__authenticated:
             raise NotAuthenticatedError
-
