@@ -1,4 +1,6 @@
 .idea/
 env/
+allowed_hosts.yaml
 credentials.yaml
 db.sqlite3
+*.mp3
