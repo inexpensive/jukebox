@@ -6,6 +6,10 @@ $(document).ready(function () {
 
     setup_play_button();
 
+    setup_pause_button();
+
+    setup_skip_button()
+
     setup_playlist();
 
     setup_currently_playing();
@@ -38,6 +42,18 @@ $(document).ready(function () {
         $('#play_button').click(function () {
             $.get('/play/');
         });
+    }
+
+    function setup_pause_button() {
+        $('#pause_button').click(function () {
+            $.get('/pause/');
+        })
+    }
+
+    function setup_skip_button() {
+        $('#skip_button').click(function () {
+            $.get('/skip/');
+        })
     }
 
     function setup_playlist() {

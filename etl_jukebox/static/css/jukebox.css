@@ -19,7 +19,7 @@ img.currently_playing_album_art {
 
 #search-results-field {
     position: fixed;
-    top: 50px;
+    top: 65px;
     bottom: 100px;
     overflow: auto;
     width: 100%;
@@ -28,6 +28,6 @@ img.currently_playing_album_art {
 #header {
     position: relative;
     top: 0;
-    height: 50px;
+    height: 65px;
     width: 100%;
 }

@@ -75,3 +75,19 @@ def playlist_details(request):
         mimetype = 'application/json'
         return HttpResponse(data, mimetype)
     return HttpResponseNotFound('Page not found.')
+
+
+def pause(request):
+    if request.is_ajax():
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        jm.pause_jukebox()
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')
+
+
+def skip(request):
+    if request.is_ajax():
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        jm.play_next_song()
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')

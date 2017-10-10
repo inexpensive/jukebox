@@ -18,7 +18,8 @@ class JukeboxMonitor(Thread):
             sleep(1)
             while self.manager.is_jukebox_playing():
                 sleep(0.1)
-            self.manager.play_next_song()
+            if not self.manager.is_paused():
+                self.manager.play_next_song()
 
 
 class SongDownloader(Thread):
@@ -40,7 +41,7 @@ class JukeboxManager:
         self._jukebox = Jukebox(credentials)
         self._song_queue = []
         self._current_song = None
-        self._playing = False
+        self._paused = False
         self._started = False
 
     def add_song(self, **song_details):
@@ -64,7 +65,6 @@ class JukeboxManager:
                 self._current_song = self._song_queue.pop(0)
                 self._jukebox.set_track(self._current_song.storeId)
                 self._jukebox.play()
-                self._playing = True
                 self._started = True
                 monitor = JukeboxMonitor(self)
                 monitor.start()
@@ -78,14 +78,12 @@ class JukeboxManager:
             self._current_song = self._song_queue.pop(0)
             self._jukebox.set_track(self._current_song.storeId)
             self._jukebox.play()
-            self._playing = True
         else:
-            self._playing = False
             self._started = False
 
     def pause_jukebox(self):
+        self._paused = not self._paused
         self._jukebox.pause()
-        self._playing = not self._playing
 
     def search(self, query):
         return self._jukebox.search(query)
@@ -123,3 +121,6 @@ class JukeboxManager:
         for song in self._song_queue:
             playlist_details.append(song.get_details())
         return playlist_details
+
+    def is_paused(self):
+        return self._paused

@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^add/.*', views.add),
     url(r'^current/.*$', views.current_details),
     url(r'^playlist/.*$', views.playlist_details),
+    url(r'^pause/.*$', views.pause),
+    url(r'^skip/.*$', views.skip),
 ]
