@@ -104,8 +104,18 @@ class JukeboxManager:
         return self._jukebox.get_current_time()
 
     def get_current_song_details(self):
-        details = self._current_song.get_details()
-        details['elapsed'] = self.elapsed_time()
+        if self._current_song is not None:
+            details = self._current_song.get_details()
+            details['elapsed'] = self.elapsed_time()
+        else:
+            details = {
+                'artist': 'Nothing Playing',
+                'title': '',
+                'album': '',
+                'duration': 1,
+                'albumArt': '',
+                'elapsed': 0,
+            }
         return details
 
     def get_playlist_details(self):

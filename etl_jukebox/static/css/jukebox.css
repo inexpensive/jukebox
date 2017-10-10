@@ -4,6 +4,12 @@ img.album-art {
     vertical-align: text-bottom;
 }
 
+img.currently_playing_album_art {
+    height: 72px;
+    width: auto;
+    vertical-align: text-bottom;
+}
+
 #footer {
     position: absolute;
     bottom: 0;

@@ -6,7 +6,9 @@ $(document).ready(function () {
 
     setup_play_button();
 
-    setup_playlist()
+    setup_playlist();
+
+    setup_currently_playing();
 
     function setup_search() {
         var search_form = $("#search_form");
@@ -58,6 +60,28 @@ $(document).ready(function () {
                     }
                 });
             }
+        })
+    }
+
+    function setup_currently_playing() {
+        $.ajax({
+            url: '/current/',
+            success: function(current_song) {
+                var $currentlyPlayingArtist = $('#currently_playing_artist');
+                $currentlyPlayingArtist.empty();
+                if (current_song.artist === 'Nothing Playing') {
+                    $currentlyPlayingArtist.append('<label>Jukebox not started.</label>');
+                }
+                else {
+                    $currentlyPlayingArtist.append('<img src="' + current_song.albumArt + '" class="currently_playing_album_art">');
+                    $currentlyPlayingArtist.append(current_song.artist + ' - ' + current_song.title + ' - ' + current_song.album);
+                    $currentlyPlayingArtist.append(millisToMinutesAndSeconds(current_song.elapsed) + ' / ' + millisToMinutesAndSeconds(current_song.duration))
+                }
+            },
+            complete: function() {
+                setTimeout(setup_currently_playing, 1000);
+            }
+
         })
     }
 });
