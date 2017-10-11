@@ -56,3 +56,9 @@ class Jukebox:
     def __is_authenticated(self):
         if not self.__authenticated:
             raise NotAuthenticatedError
+
+    def create_station(self, store_id):
+        self.__is_authenticated()
+        station_id = self.api.create_station('station', track_id=store_id)
+        station_tracks = self.api.get_station_tracks(station_id)
+        return station_tracks

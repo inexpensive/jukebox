@@ -49,6 +49,28 @@ def add(request):
     return HttpResponseNotFound('Page not found.')
 
 
+@csrf_exempt
+def add_station(request):
+    if request.is_ajax():
+        q = request.body
+        q = json.loads(q)
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        jm.add_station(**q)
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')
+
+
+@csrf_exempt
+def add_next(request):
+    if request.is_ajax():
+        q = request.body
+        q = json.loads(q)
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        jm.add_song_next(**q)
+        return HttpResponse('OK')
+    return HttpResponseNotFound('Page not found.')
+
+
 def play(request):
     if request.is_ajax():
         jm = JukeboxManagerHandler.get_jukebox_manager()

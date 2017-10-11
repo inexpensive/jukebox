@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     setup_pause_button();
 
-    setup_skip_button()
+    setup_skip_button();
 
     setup_playlist();
 
@@ -19,19 +19,25 @@ $(document).ready(function () {
         search_form.on('submit', function (e) {
             e.preventDefault();
             songs = [];
-            $('#search_results').find('tr').remove();
+            $('#search_results').find('tbody').empty();
             $.ajax({
                 type: 'GET',
                 url: '/search/',
                 data: $('#search_form').find(':input'),
                 success: function (data) {
+                    var $searchResults = $('#search_results');
+                    $searchResults.find('tbody').append('<tr><th></th><th>Song</th><th>Artist</th><th>Album</th>' +
+                        '<th>Duration</th><th><th></th><th></th></tr>');
                     for (var i = 0; i < data.length; i++) {
                         var song = data[i].track;
                         songs[i] = JSON.stringify(song);
-                        $('#search_results').find('tbody').append(
+                        $searchResults.find('tbody').append(
                             '<tr><td><img src="' + song.albumArtRef[0].url + '" class="album-art"></td><td>'
-                            + song.artist + '</td><td>' + song.title
-                            + '</td><td><button onclick="add_song(' + i + ')">Add to Playlist</button></td></tr>')
+                            + song.title + '</td><td>' + song.artist + '</td><td>' + song.album + '</td><td>'
+                            + millisToMinutesAndSeconds(song.durationMillis)
+                            + '</td><td><button onclick="add_song(' + i + ')">Add to Playlist</button></td>' +
+                            '<td><button onclick="add_station(' + i + ')">Add Station to Playlist</button></td>' +
+                            '<td><button onclick="add_next(' + i + ')">Play Next</button></td></tr>')
                     }
                 }
             })
@@ -103,11 +109,38 @@ $(document).ready(function () {
 });
 
 function add_song(index) {
-        $.post('/add/', songs[index])
+    var song = JSON.parse(songs[index]);
+    $.post('/add/', songs[index], function () {
+        $.notify('Added ' + song.title + ' to playlist', 'success')
+    })
+}
+
+function add_station(index) {
+    var song = JSON.parse(songs[index]);
+    $.notify('Generating a station based on ' + song.title, 'info');
+    $.ajax({
+        method: 'POST',
+        url: '/add_station/',
+        data: songs[index],
+        success: function () {
+            $.notify('Added a station based on ' + song.title + ' to the playlist', 'success')
+        },
+        error: function () {
+            $.notify('A station could not be generated from this song', 'error')
+        }
+    })
+}
+
+function add_next(index) {
+    var song = JSON.parse(songs[index]);
+    $.post('/add_next/', songs[index], function () {
+        $.notify(song.title + ' added next in the playlist', 'success')
+    })
 }
 
 function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
     var seconds = ((millis % 60000) / 1000).toFixed(0);
+    seconds = (seconds == 60 ? 0 : seconds);
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }

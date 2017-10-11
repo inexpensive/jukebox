@@ -22,20 +22,6 @@ class JukeboxMonitor(Thread):
                 self.manager.play_next_song()
 
 
-class SongDownloader(Thread):
-    def __init__(self, url, filename):
-        super().__init__()
-        self.url = url
-        self.filename = filename
-
-    def run(self):
-        file = 'songs/' + self.filename + '.mp3'
-        directory = os.path.dirname(file)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        urllib.request.urlretrieve(self.url, 'songs/' + self.filename + '.mp3')
-
-
 class JukeboxManager:
     def __init__(self, credentials):
         self._jukebox = Jukebox(credentials)
@@ -47,22 +33,24 @@ class JukeboxManager:
     def add_song(self, **song_details):
         song = Song(**song_details)
         self._song_queue.append(song)
-        self.download_song(song)
 
     def add_song_next(self, **song_details):
         song = Song(**song_details)
-        self._song_queue.insert(1, song)
-        self.download_song(song)
+        self._song_queue.insert(0, song)
 
     def download_song(self, song):
         song_url = self._jukebox.get_track_url(song.storeId)
-        dl = SongDownloader(song_url, song.storeId)
-        dl.start()
+        file = 'songs/' + song.storeId + '.mp3'
+        directory = os.path.dirname(file)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        urllib.request.urlretrieve(song_url, file)
 
     def start_jukebox(self):
         if not self._started:
             if self._song_queue.__len__() > 0:
                 self._current_song = self._song_queue.pop(0)
+                self.download_song(self._current_song)
                 self._jukebox.set_track(self._current_song.storeId)
                 self._jukebox.play()
                 self._started = True
@@ -76,6 +64,7 @@ class JukeboxManager:
             self._jukebox.stop()
             self.delete_current_mp3()
             self._current_song = self._song_queue.pop(0)
+            self.download_song(self._current_song)
             self._jukebox.set_track(self._current_song.storeId)
             self._jukebox.play()
         else:
@@ -124,3 +113,9 @@ class JukeboxManager:
 
     def is_paused(self):
         return self._paused
+
+    def add_station(self, **song_details):
+        song = Song(**song_details)
+        tracks = self._jukebox.create_station(song.storeId)
+        for track in tracks:
+            self.add_song(**track)

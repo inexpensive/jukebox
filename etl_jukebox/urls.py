@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^playlist/.*$', views.playlist_details),
     url(r'^pause/.*$', views.pause),
     url(r'^skip/.*$', views.skip),
+    url(r'^add_station/.*$', views.add_station),
+    url(r'^add_next/.*$', views.add_next),
 ]
