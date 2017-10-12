@@ -125,3 +125,7 @@ class JukeboxManager:
 
     def set_skip(self):
         self._skip = True
+
+    def remove_song(self, index):
+        self._song_queue.pop(index)
+        return self.get_playlist_details()

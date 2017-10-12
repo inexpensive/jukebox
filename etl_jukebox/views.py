@@ -28,7 +28,7 @@ def home(request):
 
 
 def search(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         q = request.GET.get('search_box', None)
         jm = JukeboxManagerHandler.get_jukebox_manager()
         search_results = jm.search(q)
@@ -40,7 +40,7 @@ def search(request):
 
 @csrf_exempt
 def add(request):
-    if request.is_ajax():
+    if request.method == 'POST':
         q = request.body
         q = json.loads(q)
         jm = JukeboxManagerHandler.get_jukebox_manager()
@@ -51,7 +51,7 @@ def add(request):
 
 @csrf_exempt
 def add_station(request):
-    if request.is_ajax():
+    if request.method == 'POST':
         q = request.body
         q = json.loads(q)
         jm = JukeboxManagerHandler.get_jukebox_manager()
@@ -62,7 +62,7 @@ def add_station(request):
 
 @csrf_exempt
 def add_next(request):
-    if request.is_ajax():
+    if request.method == 'POST':
         q = request.body
         q = json.loads(q)
         jm = JukeboxManagerHandler.get_jukebox_manager()
@@ -70,9 +70,20 @@ def add_next(request):
         return HttpResponse('OK')
     return HttpResponseNotFound('Page not found.')
 
+@csrf_exempt
+def remove_song(request):
+    if request.method == 'POST':
+        q = request.body
+        q = json.loads(q)
+        jm = JukeboxManagerHandler.get_jukebox_manager()
+        data = jm.remove_song(q['index'])
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
+    return HttpResponseNotFound('Page not found.')
+
 
 def play(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         jm = JukeboxManagerHandler.get_jukebox_manager()
         jm.start_jukebox()
         return HttpResponse('OK')
@@ -80,7 +91,7 @@ def play(request):
 
 
 def current_details(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         jm = JukeboxManagerHandler.get_jukebox_manager()
         details = jm.get_current_song_details()
         data = json.dumps(details)
@@ -90,7 +101,7 @@ def current_details(request):
 
 
 def playlist_details(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         jm = JukeboxManagerHandler.get_jukebox_manager()
         details = jm.get_playlist_details()
         data = json.dumps(details)
@@ -100,7 +111,7 @@ def playlist_details(request):
 
 
 def pause(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         jm = JukeboxManagerHandler.get_jukebox_manager()
         jm.pause_jukebox()
         return HttpResponse('OK')
@@ -108,7 +119,7 @@ def pause(request):
 
 
 def skip(request):
-    if request.is_ajax():
+    if request.method == 'GET':
         jm = JukeboxManagerHandler.get_jukebox_manager()
         jm.set_skip()
         return HttpResponse('OK')

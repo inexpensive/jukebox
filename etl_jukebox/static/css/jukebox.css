@@ -11,7 +11,7 @@ img.currently_playing_album_art {
 }
 
 #footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 100px;
     width: 100%;
@@ -19,7 +19,7 @@ img.currently_playing_album_art {
 
 #search-results-field {
     position: fixed;
-    top: 65px;
+    top: 120px;
     bottom: 100px;
     overflow: auto;
     width: 100%;
@@ -28,6 +28,6 @@ img.currently_playing_album_art {
 #header {
     position: relative;
     top: 0;
-    height: 65px;
+    height: 120px;
     width: 100%;
 }

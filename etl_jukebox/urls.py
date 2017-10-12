@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^skip/.*$', views.skip),
     url(r'^add_station/.*$', views.add_station),
     url(r'^add_next/.*$', views.add_next),
+    url(r'^remove/.*$', views.remove_song),
 ]

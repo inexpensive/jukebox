@@ -35,7 +35,7 @@ $(document).ready(function () {
                             '<tr><td><img src="' + song.albumArtRef[0].url + '" class="album-art"></td><td>'
                             + song.title + '</td><td>' + song.artist + '</td><td>' + song.album + '</td><td>'
                             + millisToMinutesAndSeconds(song.durationMillis)
-                            + '</td><td><button onclick="add_song(' + i + ')">Add to Playlist</button></td>' +
+                            + '</td><td><button onclick="addSong(' + i + ')">Add to Playlist</button></td>' +
                             '<td><button onclick="add_station(' + i + ')">Add Station to Playlist</button></td>' +
                             '<td><button onclick="add_next(' + i + ')">Play Next</button></td></tr>')
                     }
