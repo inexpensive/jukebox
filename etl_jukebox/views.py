@@ -110,6 +110,6 @@ def pause(request):
 def skip(request):
     if request.is_ajax():
         jm = JukeboxManagerHandler.get_jukebox_manager()
-        jm.play_next_song()
+        jm.set_skip()
         return HttpResponse('OK')
     return HttpResponseNotFound('Page not found.')
